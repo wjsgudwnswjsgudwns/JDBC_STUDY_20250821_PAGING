@@ -22,6 +22,8 @@ public class BoardController extends HttpServlet {
     	int page = 1; 
     	// 게시판의 페이지 번호 없이 게시판 링크로 접근한 경우 무조건 1페이지의 내용이 보여야 함
     	// 처음에 보여질 페이지 번호를 1로 초기화
+    	int totalBoardCount = boardDao.countBoard(); // 총 글의 갯수
+    	
     	if(request.getParameter("page") == null) { // 링크 타고 게시판 들어온 경우
     		page = 1;
     	} else { // 유저가 보고 싶은 페이지 번호를 클릭한 경우
@@ -29,8 +31,12 @@ public class BoardController extends HttpServlet {
     	}
     	
     	List<BoardDto> boardDtos = boardDao.boardList(page);
+    	int totalPage = (int) Math.ceil((double)totalBoardCount/BoardDao.PAGE_SIZE); //총 글의 갯수로 표현 될 페이지의 수
     	
-    	request.setAttribute("boardDtos", boardDtos);
+    	
+    	request.setAttribute("boardDtos", boardDtos); // 유저가 선택한 페이지에 해당하는 글
+    	request.setAttribute("currentPage", page); // 유저가 현재 선택한 페이지
+    	request.setAttribute("totalPage", totalPage); //총 글의 갯수로 표현 될 페이지의 수
     	
     	RequestDispatcher dispatcher = request.getRequestDispatcher("boardList.jsp");
 		dispatcher.forward(request, response);

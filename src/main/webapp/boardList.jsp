@@ -31,9 +31,17 @@
 	
 	</table>
 	<hr>
-	<a href="boardlist?page=1"> 1 </a> 
-	<a href="boardlist?page=2"> 2 </a> 
-	<a href="boardlist?page=3"> 3 </a> 
-	<a href="boardlist?page=4"> 4 </a>
+	<c:forEach begin="1" end="${totalPage}" var="i">
+		<c:choose>
+			<c:when test="${currentPage == i}">
+				<a href="boardlist?page=${i}"style="color: red; text-decoration: underline; font-weight: bold;"> ${i} </a>
+			</c:when>
+				
+			<c:otherwise>
+				<a href="boardlist?page=${i}" style="text-decoration: none;"> ${i} </a> 
+			</c:otherwise>
+		</c:choose>
+		
+	</c:forEach>
 </body>
 </html>
