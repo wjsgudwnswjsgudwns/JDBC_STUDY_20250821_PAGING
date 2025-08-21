@@ -31,7 +31,17 @@
 	
 	</table>
 	<hr>
-	<c:forEach begin="1" end="${totalPage}" var="i">
+	<!-- 1 페이지로 이동 -->
+	<c:if test="${currentPage > 1}">
+		<a href="boardlist?page=1" style="text-decoration: none;">◀◀ </a>
+	</c:if>
+	<!-- 이전 페이지 그룹 이동 -->
+	<c:if test="${startPage > 1}">
+		<a href="boardlist?page=${startPage - 1}" style="text-decoration: none;"> ◀ </a>
+	</c:if>
+	
+	
+	<c:forEach begin="${startPage}" end="${endPage}" var="i">
 		<c:choose>
 			<c:when test="${currentPage == i}">
 				<a href="boardlist?page=${i}"style="color: red; text-decoration: underline; font-weight: bold;"> ${i} </a>
@@ -41,7 +51,16 @@
 				<a href="boardlist?page=${i}" style="text-decoration: none;"> ${i} </a> 
 			</c:otherwise>
 		</c:choose>
-		
 	</c:forEach>
+	
+	<!-- 다음 페이지 그룹 이동 -->
+	<c:if test="${endPage < totalPage}">
+		<a href="boardlist?page=${endPage + 1}" style="text-decoration: none;"> ▶ </a>
+	</c:if>
+	
+	<!-- 마지막 페이지로 이동 -->
+	<c:if test="${currentPage < totalPage}">
+		<a href="boardlist?page=${totalPage}" style="text-decoration: none;"> ▶▶</a>
+	</c:if>
 </body>
 </html>
